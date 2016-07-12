@@ -10,7 +10,6 @@
     tools:context="com.andigital.apps.andplanner.SplashActivity">
 
     <ImageView
-        android:id="@+id/bannerImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/splash_banner"
