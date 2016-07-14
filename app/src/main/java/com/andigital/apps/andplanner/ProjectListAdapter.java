@@ -25,6 +25,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
     private static class ViewHolder {
         private ImageView thumbnail;
         private TextView name;
+        private TextView timePeriod;
     }
 
     public ProjectListAdapter(Context context, ArrayList<Project> projects) {
@@ -43,12 +44,15 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
             convertView = inflater.inflate(R.layout.project_list_view, parent, false);
             viewHolder.thumbnail = (ImageView) convertView.findViewById(R.id.projectThumbnail);
             viewHolder.name = (TextView) convertView.findViewById(R.id.projectName);
+            viewHolder.timePeriod = (TextView) convertView.findViewById(R.id.projectPeriod);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         // Populate the data into the template view using the data object
         viewHolder.name.setText(project.getName());
+        String periodString = "(" + project.getStartDate() + " to " + project.getEndDate() + ")";
+        viewHolder.timePeriod.setText(periodString);
         Picasso.with(this.getContext())
                 .load(project.getThumbnail())
                 .placeholder(R.drawable.ic_placeholder_img)
