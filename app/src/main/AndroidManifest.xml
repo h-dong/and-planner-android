@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.andigital.apps.andplanner">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <!-- <uses-permission android:name="android.permission.GET_ACCOUNTS" /> -->
@@ -35,7 +35,11 @@
         <activity
             android:name=".ProjectActivity"
             android:label="@string/title_activity_project"
-            android:theme="@style/ANDigitalTheme.NoActionBar"></activity>
+            android:theme="@style/ANDigitalTheme.NoActionBar" />
+        <activity
+            android:name=".TeamActivity"
+            android:label="@string/title_activity_team"
+            android:theme="@style/ANDigitalTheme.NoActionBar" />
     </application>
 
 </manifest>

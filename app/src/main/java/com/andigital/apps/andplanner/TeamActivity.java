@@ -3,9 +3,6 @@ package com.andigital.apps.andplanner;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -29,22 +26,22 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
-public class ProjectActivity extends AppCompatActivity
+public class TeamActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView responseView;
     private ProgressBar progressBar;
     private ListView listView;
-    private ArrayList<Project> projects;
-    private ProjectListAdapter adapter;
-    private static final String API_URL = "http://52.51.66.81:8080/projects";
+    private ArrayList<Team> teams;
+    private TeamListAdapter adapter;
+    private static String API_URL = "http://52.51.66.81:8080/phases";
+    private static String projectID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_project);
+        setContentView(R.layout.activity_team);
 
         responseView = (TextView) findViewById(R.id.responseView);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -62,15 +59,20 @@ public class ProjectActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setProjectsListViewAdapter();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            projectID = extras.getString("PROJECT_ID");
+        }
+
+        setTeamListViewAdapter();
 
         // Get data from API
         new RetrieveDataFromAPI().execute();
     }
 
-    private void setProjectsListViewAdapter() {
-        projects = new ArrayList<>();
-        adapter = new ProjectListAdapter(this, projects);
+    private void setTeamListViewAdapter() {
+        teams = new ArrayList<>();
+        adapter = new TeamListAdapter(this, teams);
     }
 
     @Override
@@ -83,13 +85,6 @@ public class ProjectActivity extends AppCompatActivity
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.project, menu);
-//        return true;
-//    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -97,8 +92,8 @@ public class ProjectActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
 //        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.nav_schedule) {
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
 //            return true;
 //        }
 
@@ -111,7 +106,9 @@ public class ProjectActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_settings) {
+        if (id == R.id.nav_projects) {
+            this.finish();
+        } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_feedback) {
 
@@ -123,7 +120,6 @@ public class ProjectActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
     private class RetrieveDataFromAPI extends AsyncTask<String, Void, String> {
 
@@ -138,7 +134,7 @@ public class ProjectActivity extends AppCompatActivity
             String response;
 
             try {
-                URL url = new URL(API_URL);
+                URL url = new URL(API_URL + "?id=" + projectID);
 //                URL url = new URL(API_HOST + API_USERS + "?" + API_PER_PAGE + API_PER_PAGE_NUM + API_AUTH);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 try {
@@ -164,8 +160,7 @@ public class ProjectActivity extends AppCompatActivity
 
         protected void onPostExecute(String response) {
 
-
-            if(response == null) { // No response from sever
+            if (response == null) { // No response from sever
                 progressBar.setVisibility(View.GONE);
                 listView.setVisibility(View.GONE);
                 responseView.setVisibility(View.VISIBLE);
@@ -181,16 +176,21 @@ public class ProjectActivity extends AppCompatActivity
 
                     JSONArray jsonArray = new JSONArray(response);
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        Project project = new Project();
+                        Team team = new Team();
                         JSONObject item = jsonArray.getJSONObject(i);
 
-                        project.setId(item.getInt("id"));
-                        project.setName(item.getString("name"));
-                        project.setStartDate(item.getString("starts_at"));
-                        project.setEndDate(item.getString("ends_at"));
-                        project.setThumbnail(item.getString("thumbnail"));
+                        team.setId(item.getInt("id"));
+                        team.setName(item.getString("phase_name"));
 
-                        projects.add(project);
+                        if (item.has("starts_at")) {
+                            team.setStartDate(item.getString("starts_at"));
+                        }
+
+                        if (item.has("ends_at")) {
+                            team.setEndDate(item.getString("ends_at"));
+                        }
+
+                        teams.add(team);
                     }
 
                     listView.setAdapter(adapter);
@@ -199,8 +199,8 @@ public class ProjectActivity extends AppCompatActivity
 
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                            Intent intent = new Intent(getBaseContext(), TeamActivity.class);
-                            intent.putExtra("PROJECT_ID", Integer.toString(projects.get(position).getId()));
+                            Intent intent = new Intent(getBaseContext(), ScheduleActivity.class);
+                            intent.putExtra("TEAM_ID", Integer.toString(teams.get(position).getId()));
                             startActivity(intent);
                         }
 

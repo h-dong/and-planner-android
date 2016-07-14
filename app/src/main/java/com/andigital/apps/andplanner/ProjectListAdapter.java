@@ -1,10 +1,6 @@
 package com.andigital.apps.andplanner;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.annotation.DrawableRes;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +10,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -51,7 +46,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
         }
         // Populate the data into the template view using the data object
         viewHolder.name.setText(project.getName());
-        String periodString = "(" + project.getStartDate() + " to " + project.getEndDate() + ")";
+        String periodString = "From " + project.getStartDate() + " to " + project.getEndDate();
         viewHolder.timePeriod.setText(periodString);
         Picasso.with(this.getContext())
                 .load(project.getThumbnail())

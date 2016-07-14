@@ -10,7 +10,6 @@
         android:layout_centerVertical="true"
         android:paddingTop="2dp"
         android:scaleType="fitXY" />
-        <!--android:src="@drawable/profile_picture" />-->
 
     <TextView
         android:id="@+id/projectName"
