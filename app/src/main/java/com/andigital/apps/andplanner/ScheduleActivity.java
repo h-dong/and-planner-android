@@ -39,6 +39,7 @@ public class ScheduleActivity extends AppCompatActivity
     private PeopleListAdapter adapter;
     private static String teamID;
     private static String API_URL = "http://52.51.66.81:8080/phaseAssignees";
+    // http://52.51.66.81:8080/leaveTypes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
