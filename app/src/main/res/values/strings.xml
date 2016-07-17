@@ -33,5 +33,6 @@
 
     <!-- Project Screen -->
     <string name="project_image">Project Thumbnail</string>
+    <string name="person_image">Person Thumbnail</string>
 
 </resources>
