@@ -11,6 +11,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="activity_schedule">Schedule</string>
+    <string name="title_activity_weekly">Weekly</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -35,5 +36,8 @@
     <!-- Project Screen -->
     <string name="project_image">Project Thumbnail</string>
     <string name="person_image">Person Thumbnail</string>
+
+
+    <string name="action_settings">Settings</string>
 
 </resources>

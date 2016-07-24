@@ -29,10 +29,6 @@
             android:label="@string/title_activity_login"
             android:noHistory="true" />
         <activity
-            android:name=".ScheduleActivity"
-            android:label="@string/activity_schedule"
-            android:theme="@style/ANDigitalTheme.NoActionBar" />
-        <activity
             android:name=".ProjectActivity"
             android:label="@string/title_activity_project"
             android:theme="@style/ANDigitalTheme.NoActionBar" />
@@ -40,6 +36,16 @@
             android:name=".TeamActivity"
             android:label="@string/title_activity_team"
             android:theme="@style/ANDigitalTheme.NoActionBar" />
+        <activity
+            android:name=".ScheduleActivity"
+            android:label="@string/activity_schedule"
+            android:theme="@style/ANDigitalTheme.NoActionBar"
+            android:noHistory="true" />
+        <activity
+            android:name=".WeeklyActivity"
+            android:label="@string/title_activity_weekly"
+            android:theme="@style/ANDigitalTheme.NoActionBar"
+            android:noHistory="true" />
     </application>
 
 </manifest>
