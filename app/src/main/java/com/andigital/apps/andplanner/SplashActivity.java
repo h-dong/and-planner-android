@@ -23,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
                 try {
                     sleep(500);
 
-                    Intent i = new Intent(getBaseContext(), ScheduleActivity.class);
+                    Intent i = new Intent(getBaseContext(), LoginActivity.class);
                     startActivity(i);
                     finish();
                 } catch (Exception e) {
